@@ -12,6 +12,7 @@ package eslgo
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net"
 	"time"
@@ -53,7 +54,15 @@ func (opts InboundOptions) Dial(address string) (*Conn, error) {
 	connection := newConnection(c, false, opts.Options)
 
 	// First auth
-	<-connection.responseChannels[TypeAuthRequest]
+	tick := time.NewTicker(opts.AuthTimeout)
+	defer tick.Stop()
+	select {
+	case <-connection.responseChannels[TypeAuthRequest]:
+	case <-tick.C:
+		connection.Close()
+		return nil, errors.New("recv auth timeout")
+	}
+
 	authCtx, cancel := context.WithTimeout(connection.runningContext, opts.AuthTimeout)
 	err = connection.doAuth(authCtx, command.Auth{Password: opts.Password})
 	cancel()
