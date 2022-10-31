@@ -20,7 +20,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/percipia/eslgo/command"
+	"github.com/ln1code/eslgo/command"
 )
 
 type Conn struct {

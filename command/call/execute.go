@@ -12,7 +12,7 @@ package call
 
 import (
 	"fmt"
-	"github.com/percipia/eslgo/command"
+	"github.com/ln1code/eslgo/command"
 	"net/textproto"
 	"strconv"
 )

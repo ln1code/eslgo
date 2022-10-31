@@ -1,19 +1,19 @@
 # eslgo
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/percipia/eslgo)](https://pkg.go.dev/github.com/percipia/eslgo)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/ln1code/eslgo)](https://pkg.go.dev/github.com/ln1code/eslgo)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/percipia/eslgo/Go)
-[![Go Report Card](https://goreportcard.com/badge/github.com/percipia/eslgo)](https://goreportcard.com/report/github.com/percipia/eslgo)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ln1code/eslgo)](https://goreportcard.com/report/github.com/ln1code/eslgo)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/percipia/eslgo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/percipia/eslgo/alerts/)
-[![GitHub license](https://img.shields.io/github/license/percipia/eslgo)](https://github.com/percipia/eslgo/blob/v1/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/percipia/eslgo)](https://github.com/ln1code/eslgo/blob/v1/LICENSE)
 
 eslgo is a [FreeSWITCH™](https://freeswitch.com/) ESL library for GoLang.
 eslgo was written from the ground up in idiomatic Go for use in our production products tested handling thousands of calls per second.
 
 ## Install
 ```
-go get github.com/percipia/eslgo
+go get github.com/ln1code/eslgo
 ```
 ```
-github.com/percipia/eslgo v1.4.1
+github.com/ln1code/eslgo v1.4.1
 ```
 
 ## Overview
@@ -42,7 +42,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/percipia/eslgo"
+	"github.com/ln1code/eslgo"
 	"log"
 )
 
@@ -66,7 +66,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/percipia/eslgo"
+	"github.com/ln1code/eslgo"
 	"time"
 )
 
