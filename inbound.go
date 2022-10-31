@@ -13,9 +13,10 @@ package eslgo
 import (
 	"context"
 	"fmt"
-	"github.com/ln1code/eslgo/command"
 	"net"
 	"time"
+
+	"github.com/ln1code/eslgo/command"
 )
 
 // InboundOptions - Used to dial a new inbound ESL connection to FreeSWITCH
@@ -76,7 +77,7 @@ func (opts InboundOptions) Dial(address string) (*Conn, error) {
 
 func (c *Conn) disconnectLoop(onDisconnect func()) {
 	select {
-	case <-c.responseChannels[TypeDisconnect]:
+	case <-c.getResponseChannels(TypeDisconnect):
 		c.Close()
 		if onDisconnect != nil {
 			onDisconnect()
@@ -90,7 +91,7 @@ func (c *Conn) disconnectLoop(onDisconnect func()) {
 func (c *Conn) authLoop(auth command.Auth, authTimeout time.Duration) {
 	for {
 		select {
-		case <-c.responseChannels[TypeAuthRequest]:
+		case <-c.getResponseChannels(TypeAuthRequest):
 			authCtx, cancel := context.WithTimeout(c.runningContext, authTimeout)
 			err := c.doAuth(authCtx, auth)
 			cancel()

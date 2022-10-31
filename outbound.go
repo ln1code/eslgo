@@ -13,9 +13,10 @@ package eslgo
 import (
 	"context"
 	"errors"
-	"github.com/ln1code/eslgo/command"
 	"net"
 	"time"
+
+	"github.com/ln1code/eslgo/command"
 )
 
 type OutboundHandler func(ctx context.Context, conn *Conn, connectResponse *RawResponse)
@@ -94,10 +95,10 @@ func (c *Conn) outboundHandle(handler OutboundHandler, connectionDelay, connectT
 
 func (c *Conn) dummyLoop() {
 	select {
-	case <-c.responseChannels[TypeDisconnect]:
+	case <-c.getResponseChannels(TypeDisconnect):
 		c.logger.Info("Disconnect outbound connection", c.conn.RemoteAddr())
 		c.Close()
-	case <-c.responseChannels[TypeAuthRequest]:
+	case <-c.getResponseChannels(TypeAuthRequest):
 		c.logger.Debug("Ignoring auth request on outbound connection", c.conn.RemoteAddr())
 	case <-c.runningContext.Done():
 		return

@@ -14,6 +14,7 @@ import (
 	"bufio"
 	"context"
 	"errors"
+	"io"
 	"net"
 	"net/textproto"
 	"sync"
@@ -38,6 +39,12 @@ type Conn struct {
 	logger            Logger
 	exitTimeout       time.Duration
 	closeOnce         sync.Once
+}
+
+func (c *Conn) getResponseChannels(responsetype string) chan *RawResponse {
+	c.responseChanMutex.RLock()
+	defer c.responseChanMutex.RUnlock()
+	return c.responseChannels[responsetype]
 }
 
 // Options - Generic options for an ESL connection, either inbound or outbound
@@ -271,6 +278,9 @@ func (c *Conn) receiveLoop() {
 	for c.runningContext.Err() == nil {
 		err := c.doMessage()
 		if err != nil {
+			if err == io.EOF {
+				break
+			}
 			c.logger.Warn("Error receiving message: %s\n", err.Error())
 			break
 		}
