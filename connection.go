@@ -14,12 +14,13 @@ import (
 	"bufio"
 	"context"
 	"errors"
-	"github.com/google/uuid"
-	"github.com/percipia/eslgo/command"
 	"net"
 	"net/textproto"
 	"sync"
 	"time"
+
+	"github.com/google/uuid"
+	"github.com/percipia/eslgo/command"
 )
 
 type Conn struct {
@@ -112,6 +113,9 @@ func (c *Conn) RemoveEventListener(channelUUID string, id string) {
 
 	if listeners, ok := c.eventListeners[channelUUID]; ok {
 		delete(listeners, id)
+		if len(listeners) == 0 {
+			delete(c.eventListeners, channelUUID)
+		}
 	}
 }
 
